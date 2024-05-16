@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gonzo Music Generation App</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tone@14.7.58"></script>
+
+</head>
+<body>
+    {% include 'header.html' %}
+
+
+
+    <main>
+        <div class="container">
+            <form id="uploadForm" enctype="multipart/form-data" class="form">
+                <p class = "form-general-text">*This is optional but you can choose MIDI file, and this file will be used as input sequence for model</p>
+                <button id="uploadbutton" class="submit-button">Upload MIDI File</button>
+                
+                <input type="file" id="midiFile" name="midiFile" accept=".mid" class="input-field" style="display: none;">
+                <p class = "form-general-text">Select Composition Length</p>
+                <input type="range" id="compositionLength" name="compositionLength" placeholder="Composition Length (in bars)" value= "100" class="input-field"  min = "50" max = "500">
+                
+                <output for="compositionLength" id="compositionValue" class="input-field"> Composition Length: 100</output>
+                <p class = "form-general-text">Select Instrument</p>
+                <select id="instrument" name="instrument" class="input-field">
+                    <option value="piano">Piano</option>
+                    <option value="guitar">Guitar</option>
+                    <option value="violin">Violin</option>
+                    <option value="flute">Flute</option>
+                    <option value="bagpipes">Bagpipes</option>
+                    <option value="organ">Organ</option>
+                    <option value="tenor_vocal">Vocal Tenor</option>
+                    
+                    <!-- Добавьте другие инструменты, если нужно -->
+                </select>
+                <p class = "form-general-text">Select Style</p>
+                <select id="style" name="style" class="input-field">
+                    <option value="combo">Combo</option>
+                    <option value="irish">Irish</option>
+                    <option value="classical">Classical</option>
+                    <!-- Добавьте другие стили, если нужно -->
+                </select>
+                <div class="ruin">
+                <div class="checkbox-wrapper-35">
+                    <input class="switch" type="checkbox" id="switch" name="switch" value="random">
+                    <label for="switch">
+                      <span class="switch-x-text">Randomize starting point is </span>
+                      <span class="switch-x-toggletext">
+                        <span class="switch-x-unchecked"><span class="switch-x-hiddenlabel">Unchecked: </span>Off</span>
+                        <span class="switch-x-checked"><span class="switch-x-hiddenlabel">Checked: </span>On</span>
+                      </span>
+                    </label>
+                  </div>
+                  </div>
+                  
+                  
+                    
+                  
+                  
+            </form>
+            <div id="loadingAnimation"></div>
+            <button id="generateButton" class="generate-button">Generate Music</button>
+            <div id="generatedMusic" class="generated-music"></div>
+            <button id="downloadButton" class="download-button" style="display: none;">Download Generated Music</button>
+            <midi-player id="midi-player" class="midiplayer" style="display: none;"
+                
+                sound-font visualizer="#myVisualizer">
+            </midi-player>
+            <midi-visualizer  id="myVisualizer"></midi-visualizer>
+            
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+
+    <script src="static/script.js"></script>
+</body>
+</html>

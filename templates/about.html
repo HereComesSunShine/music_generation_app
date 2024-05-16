@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Music Generation App</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    {% include 'header.html' %}
+
+
+    <main>
+        <div class="container">
+            <p>This is the Music Generation App, a web application for generating music using neural networks.</p>
+            <p>It allows users to upload MIDI files, choose parameters such as composition length, instrument, and style, and then generate new music based on the uploaded file and chosen parameters.</p>
+            <p>Created with Flask, Python, Keras and Music21.</p>
+            <p>MIDI Player used on website provided by <a href="https://github.com/cifkao/html-midi-player?tab=readme-ov-file">cifkao</a> </p>
+            
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+
+</body>
+</html>
