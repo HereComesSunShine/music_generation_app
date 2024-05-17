@@ -21,6 +21,7 @@ def transform_pitch(notes, pitchnames):
                 if len(new_notes)>0:
 
                     new_notes.append(new_notes[-1])
+                    
                 else:
                     new_notes.append(pitchnames[random.randint(0,len(set(pitchnames)))])
                 
