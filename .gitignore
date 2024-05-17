@@ -307,7 +307,10 @@ weights/irish/weights*
 /test/
 /graphs/
 **/data/*
-
+*.hdf5                # Игнорировать все файлы формата hdf5
+#!weights-model_classic-300-0.8220.hdf5
+#!weights-model_combo-400-0.4020.hdf5
+#!weights-model_irish-300-0.5301.hdf5
 
 graphs.py
 smth.py
