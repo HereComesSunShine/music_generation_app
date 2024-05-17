@@ -295,21 +295,19 @@ test*
 !requirements.txt
 
 
-weights/*
+weights/classic/weights*
+!weights/classic/weights-model_classic-300-0.8220.hdf5
 
-# Отменить исключение для нужных файлов
-!weights/weights-model_classic-300-0.8220.hdf5
-#!weights/weights-model_combo-400-0.4020.hdf5
-#!weights/weights-model_irish-300-0.5301.hdf5
+weights/combo/weights*
+!**weights/combo/weights-model_combo-400-0.4020.hdf5
+weights/irish/weights*
+!**weights/irish/weights-model_irish-300-0.5301.hdf5
 
 
 /test/
 /graphs/
 **/data/*
-*.hdf5                # Игнорировать все файлы формата hdf5
-!weights-model_classic-300-0.8220.hdf5
-#!weights-model_combo-400-0.4020.hdf5
-#!weights-model_irish-300-0.5301.hdf5
+
 
 graphs.py
 smth.py
