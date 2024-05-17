@@ -14,6 +14,7 @@ def transform_pitch(notes, pitchnames):
                
                 index = pitchnames_str.index(elem_str[0])
                 new_notes.append(''.join(elem_str[0])+" "+''.join(pitchnames_str[index+1]))
+                print(new_notes[-1])
                 #new_notes.append(pitchnames_str[index+1])
                 print(index)
             else:
