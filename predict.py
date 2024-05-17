@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+
 #!pip install keras_self_attention
 import glob
 import pickle
@@ -16,17 +17,16 @@ import io
 import time
 
 
-
-
-
-def generate_notes(model, network_input, pitchnames, n_vocab, start_random, output_len): ##
+def generate_notes(
+    model, network_input, pitchnames, n_vocab, start_random, output_len
+):  ##
     print("generating")
-   
+
     # pick a random seq from the input as a start
     if start_random:
-        start = np.random.randint(0, len(network_input)-1)
+        start = np.random.randint(0, len(network_input) - 1)
     else:
-        start=0
+        start = 0
     int_to_note = dict((number, note) for number, note in enumerate(pitchnames))
 
     pattern = network_input[start]
@@ -44,8 +44,8 @@ def generate_notes(model, network_input, pitchnames, n_vocab, start_random, outp
         prediction_output.append(result)
 
         pattern.append(index)
-        pattern = pattern[1:len(pattern)]
-    #time_gen = time_start - time.time()
+        pattern = pattern[1 : len(pattern)]
+    # time_gen = time_start - time.time()
     print("generating complete")
-    
+
     return prediction_output
