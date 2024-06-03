@@ -303,6 +303,8 @@ weights/combo/weights*
 weights/irish/weights*
 #!**weights/irish/weights-model_irish-300-0.5301.hdf5
 
+/show/
+/myenv/
 
 /test/
 /graphs/

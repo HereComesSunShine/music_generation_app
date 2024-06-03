@@ -1,7 +1,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-    padding: 20px;
+    
     margin: 0;
 }
 
@@ -15,7 +15,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -59,12 +59,14 @@ footer {
 }
 
 .container {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 0 auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .input-field {
@@ -103,6 +105,14 @@ footer {
 .midiplayer{
     width: 100%;
     margin: 10px;
+}
+.midiplayer{
+  margin: 10px;
+}
+#myVisualizer {
+  height: fit-content;
+  padding-bottom: 25px;
+  margin-bottom: 15px;
 }
 
 /* Стили для анимации загрузки */

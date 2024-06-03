@@ -12,7 +12,7 @@ from keras import utils
 from keras.callbacks import ModelCheckpoint, CSVLogger
 from keras_self_attention import SeqSelfAttention
 from keras.layers import BatchNormalization as BatchNorm
-import logging
+
 import io
 import time
 
@@ -24,17 +24,11 @@ def prepare_sequences_output(notes, pitchnames, n_vocab):
     sequence_length = 100
     network_input = []
     output = []
-    count = 0
     for i in range(0, len(notes) - sequence_length, 1):
-        try:
-            sequence_in = notes[i : i + sequence_length]
-            sequence_out = notes[i + sequence_length]
-
-            network_input.append([note_to_int[char] for char in sequence_in])
-            output.append(note_to_int[sequence_out])
-            count += 1
-        except:
-            continue
+        sequence_in = notes[i : i + sequence_length]
+        sequence_out = notes[i + sequence_length]
+        network_input.append([note_to_int[char] for char in sequence_in])
+        output.append(note_to_int[sequence_out])
 
     n_patterns = len(network_input)
 

@@ -9,13 +9,12 @@ from io import BytesIO
 
 FP = "generated/"
 MOD = "generated_music"
-import time
 
 
 def create_midi(prediction_output, chosen_instrument, fp, folder):
-    # print (prediction_output)
+
     print("start midi transform")
-    start_time = time.time()
+
     offset = 0
     output_notes = []
     if chosen_instrument == "guitar":
@@ -33,8 +32,6 @@ def create_midi(prediction_output, chosen_instrument, fp, folder):
     else:
 
         output_notes.append(instrument.Piano())
-
-    ########
 
     for pattern in prediction_output:
         pattern = pattern.split()
@@ -69,9 +66,6 @@ def create_midi(prediction_output, chosen_instrument, fp, folder):
             output_notes.append(new_note)
 
         offset += convert_to_float(duration)
-
-    # midi_data = BytesIO()
-
     # Создаем MIDI-поток на основе списка output_notes
     midi_stream = stream.Stream(output_notes)
     print("Writing midi")
@@ -79,6 +73,7 @@ def create_midi(prediction_output, chosen_instrument, fp, folder):
 
     midi_stream.write("midi", fp=folder + "/" + fp)
     print("Done")
+    return midi_stream
 
 
 def convert_to_float(frac_str):

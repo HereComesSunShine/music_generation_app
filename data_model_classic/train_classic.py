@@ -1,8 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import os
-
-#!pip install keras_self_attention
 import glob
 import pickle
 from music21 import converter, instrument, stream, note, chord
@@ -16,19 +13,22 @@ import logging
 import io
 import time
 
+# Запуск логов обучения
 logger = logging.getLogger(__name__)
 logging.basicConfig(filename="train_classic.log", level=logging.INFO)
 logger.info("Started")
 
 
 def train_network(notes, n_vocab):
+    """Обучение нейронной сети"""
+
     network_input, network_output = prepare_sequences(notes, n_vocab)
     model = create_network(network_input, n_vocab)
     train(model, network_input, network_output)
 
 
 def prepare_sequences(notes, n_vocab):
-    """Подготовка последовательностей на вход нейронной сети"""
+    """Подготовка обучающих данных на вход нейронной сети"""
     time_start = time.time()
     # Размер последовательности
     sequence_length = 100
@@ -53,6 +53,7 @@ def prepare_sequences(notes, n_vocab):
     network_input = np.reshape(network_input, (n_patterns, sequence_length, 1))
 
     network_input = network_input / float(n_vocab)
+    # преобразование в вероятностное распределение
     network_output = utils.to_categorical(network_output)
     time_end = time.time()
     return (network_input, network_output)
@@ -70,9 +71,7 @@ def create_network(network_input, n_vocab):
         )
     )
     model.add(SeqSelfAttention(attention_activation="sigmoid"))
-
     model.add(Dropout(0.4))
-
     model.add(
         LSTM(
             128,
@@ -80,15 +79,13 @@ def create_network(network_input, n_vocab):
             return_sequences=True,
         )
     )
-
     model.add(Dropout(0.4))
-
     model.add(Flatten())
     model.add(Dense(n_vocab))
     model.add(Activation("softmax"))
     model.compile(loss="categorical_crossentropy", optimizer="rmsprop")
 
-    ##logger
+    ##логгер
     buffer = io.StringIO()
     model.summary(print_fn=lambda x: buffer.write(x + "\n"))
     model_summary = buffer.getvalue()
@@ -98,14 +95,14 @@ def create_network(network_input, n_vocab):
 
 
 def train(model, network_input, network_output):
-    """train the neural network"""
+    """Спецификация параметров обучения"""
     logger.info("Starting traning...")
     time_start = time.time()
     filepath = os.path.abspath("weights-model_classic-{epoch:03d}-{loss:.4f}.hdf5")
     csvlog_filepath = os.path.abspath("training_log.csv")
     checkpoint = ModelCheckpoint(
         filepath,
-        period=10,  # Every 10 epochs
+        period=10,
         monitor="loss",
         verbose=1,
         save_best_only=False,
@@ -116,16 +113,9 @@ def train(model, network_input, network_output):
     history = model.fit(
         network_input,
         network_output,
-        epochs=100,
-        batch_size=256,
+        epochs=300,
+        batch_size=512,
         callbacks=callbacks_list,
     )
     time_end = time.time()
     logger.info("Time ellapse: " + str(time_end - time_start))
-    # Построение графика потерь относительно эпохи
-    plt.plot(history.history["loss"])
-    plt.title("Model Loss")
-    plt.ylabel("Loss")
-    plt.xlabel("Epoch")
-    plt.legend(["Train"], loc="upper left")
-    plt.show()

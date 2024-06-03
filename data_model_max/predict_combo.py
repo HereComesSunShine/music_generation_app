@@ -12,7 +12,7 @@ from keras import utils
 from keras.callbacks import ModelCheckpoint, CSVLogger
 from keras_self_attention import SeqSelfAttention
 from keras.layers import BatchNormalization as BatchNorm
-import logging
+
 import io
 import time
 

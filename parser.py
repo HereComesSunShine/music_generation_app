@@ -1,12 +1,4 @@
-import glob
-import pickle
-import numpy
 from music21 import *
-import time
-from mido import MidiFile
-import logging
-import sys
-
 import little_lib
 
 
@@ -14,21 +6,13 @@ def get_notes(fp):
 
     notes = []
     durations = []
-
     midi = converter.parse(fp)
-
     midi = little_lib.remove_percussion(midi)
     midi = little_lib.remove_instruments_with_few_notes(midi, 100)
     midi = little_lib.keep_loudest_instrument(midi)
-
-    # print("Parsing %s" % file)
-
-    notes_to_parse = None
-
+    
     notes_to_parse = midi.flat.notes
-
     objects_in_song = 0
-
     for element in notes_to_parse:
         if isinstance(element, note.Note):
             notes.append(str(element.pitch) + " " + str(element.quarterLength))
@@ -41,7 +25,6 @@ def get_notes(fp):
         elif isinstance(element, note.Rest):
             notes.append(str(element.name) + " " + str(element.quarterLength))
             objects_in_song += 1
-        # with open('notes_irish', 'wb') as filepath:
-    #    pickle.dump(notes, filepath)
+        
 
     return notes

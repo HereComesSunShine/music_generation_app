@@ -21,6 +21,10 @@ import parser
 from flask_cors import CORS
 import uuid
 import io
+import warnings
+from silence_tensorflow import silence_tensorflow
+silence_tensorflow()
+warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
 CORS(app)
@@ -49,6 +53,7 @@ with open("data_model_max/notes_combo", "rb") as fp_m:
 pitchnames_combo = sorted(set(item for item in notes_combo))
 n_vocab_combo = len(set(notes_combo))
 print("upload complete")
+
 
 print("Creating starting sequences")
 
@@ -167,11 +172,11 @@ def generate_music():
             )
             print("Prepearing sequences...")
 
-            wrong_pitch = create_seq.check_pitches(notes, pitchnames_classic)
+            wrong_pitch = create_seq.check_pitches(notes, pitchnames_irish)
             if wrong_pitch:
                 print("Wrong pitch")
                 notes, success_transform = create_seq.transform_pitch(
-                    notes, pitchnames_classic
+                    notes, pitchnames_irish
                 )
 
             network_input_irish, normalized_input_irish = (
@@ -209,11 +214,11 @@ def generate_music():
             )
             try:
                 print("Prepearing sequences...")
-                wrong_pitch = create_seq.check_pitches(notes, pitchnames_classic)
+                wrong_pitch = create_seq.check_pitches(notes, pitchnames_combo)
                 if wrong_pitch:
                     print("Wrong pitch")
                     notes, success_transform = create_seq.transform_pitch(
-                        notes, pitchnames_classic
+                        notes, pitchnames_combo
                     )
 
                 network_input_combo, normalized_input_combo = (

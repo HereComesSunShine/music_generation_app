@@ -12,7 +12,7 @@ from keras import utils
 from keras.callbacks import ModelCheckpoint, CSVLogger
 from keras_self_attention import SeqSelfAttention
 from keras.layers import BatchNormalization as BatchNorm
-import logging
+
 import io
 import time
 
@@ -72,12 +72,12 @@ def create_network(network_input, n_vocab):
     return model
 
 
-def generate_notes(
-    model, network_input, pitchnames, n_vocab, start_random, output_len
-):  ##
+def generate_notes(model, network_input, pitchnames, n_vocab, start_random, output_len):
+    """Генерация композиций"""
+
     print("generating")
 
-    # pick a random seq from the input as a start
+    # выбрать случайную последовательность
     if start_random:
         start = np.random.randint(0, len(network_input) - 1)
     else:
@@ -87,20 +87,17 @@ def generate_notes(
     pattern = network_input[start]
     prediction_output = []
 
-    # generate n notes
+    # сгенерировать output_len нот
     for note_index in range(output_len):
         prediction_input = np.reshape(pattern, (1, len(pattern), 1))
         prediction_input = prediction_input / float(n_vocab)
-
         prediction = model.predict(prediction_input, verbose=0)
-
         index = np.argmax(prediction)
         result = int_to_note[index]
         prediction_output.append(result)
-
         pattern.append(index)
         pattern = pattern[1 : len(pattern)]
-    # time_gen = time_start - time.time()
+
     print("generating complete")
 
     return prediction_output
